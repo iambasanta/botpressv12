@@ -53,8 +53,12 @@ module.exports = {
             type: {
               title: 'Type',
               type: 'string',
-              enum: ['text', 'email', 'password', 'textarea', 'file', 'date'],
+              enum: ['text', 'email', 'password', 'textarea', 'file', 'date', 'radio', 'checkbox', 'dropdown'],
               default: 'text'
+            },
+            options: {
+              title: 'Options',
+              type: 'string'
             }
           }
         }
