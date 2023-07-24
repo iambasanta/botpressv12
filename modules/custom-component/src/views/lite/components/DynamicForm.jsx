@@ -100,6 +100,34 @@ export const DynamicForm = props => {
           </>
         )
         break
+      case 'textarea':
+        return (
+          <>
+            <input
+              name={field.title}
+              id={field.title}
+              type={field.type}
+              className="input_field_type"
+              value={inputValues[field.title] || ''}
+              onChange={e => handleInputChange(e, field)}
+            />
+          </>
+        )
+        break
+      case 'file':
+        return (
+          <>
+            <input
+              name={field.title}
+              id={field.title}
+              type={field.type}
+              className="input_field_type"
+              value={inputValues[field.title] || ''}
+              onChange={e => handleInputChange(e, field)}
+            />
+          </>
+        )
+        break
       case 'email':
         return (
           <>
