@@ -22,7 +22,6 @@ export const DynamicForm = props => {
       ...inputValues,
       [field?.title]: e?.target?.value
     })
-    console.log('------Input values-----', inputValues)
   }
 
   const renderInputField = field => {
@@ -116,6 +115,20 @@ export const DynamicForm = props => {
         )
         break
       case 'password':
+        return (
+          <>
+            <input
+              name={field.title}
+              id={field.title}
+              type={field.type}
+              className="input_field_type"
+              value={inputValues[field.title] || ''}
+              onChange={e => handleInputChange(e, field)}
+            />
+          </>
+        )
+        break
+      case 'date':
         return (
           <>
             <input
