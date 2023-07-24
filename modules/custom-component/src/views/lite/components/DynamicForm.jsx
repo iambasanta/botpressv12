@@ -24,6 +24,8 @@ export const DynamicForm = props => {
     })
   }
 
+  const capetilizeFirstLetterOfFieldTitle = title => title[0].toUpperCase() + title.slice(1)
+
   const renderInputField = field => {
     switch (field?.type) {
       case 'dropdown':
@@ -197,7 +199,7 @@ export const DynamicForm = props => {
         {props.response?.data?.input_fields?.map((field, index) => (
           <div className="input_group" key={index}>
             <label htmlFor={field.title} className="input_field_label">
-              {field.title}
+              {capetilizeFirstLetterOfFieldTitle(field.title)}
             </label>
 
             <br />
