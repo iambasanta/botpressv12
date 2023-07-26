@@ -181,6 +181,14 @@
           }
         } else {
           // chat 1
+          if (event.data.name === 'webchatReady') {
+            window.botpressWebChat.sendEvent({
+              type: 'proactive-trigger',
+              channel: 'web',
+              payload: { text: 'fake message' }
+            })
+          }
+
           if (message.data.userId) {
             userId = message.data.userId
             document.getElementById('user-id-bp').innerText = userId
