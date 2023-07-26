@@ -30,6 +30,7 @@ fetchData().then(data => {
       try {
         const message = {
           type: 'text',
+          typing: true,
           text: greetingMessage,
           markdown: true
         }
