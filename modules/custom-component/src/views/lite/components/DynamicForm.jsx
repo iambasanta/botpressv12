@@ -20,11 +20,9 @@ export const DynamicForm = props => {
   const handleInputChange = (e, field) => {
     setInputValues({
       ...inputValues,
-      [field?.title]: e?.target?.value
+      [field?.name]: e?.target?.value
     })
   }
-
-  const capetilizeFirstLetterOfFieldTitle = title => title[0].toUpperCase() + title.slice(1)
 
   const renderInputField = field => {
     switch (field?.type) {
@@ -32,11 +30,11 @@ export const DynamicForm = props => {
         return (
           <>
             <select
-              name={field?.title}
-              id={field?.title}
+              name={field?.name}
+              id={field?.name}
               onChange={e => handleInputChange(e, field)}
               className="dropdown"
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             >
               {field?.options?.split(',')?.map((option, index) => {
                 return (
@@ -59,9 +57,9 @@ export const DynamicForm = props => {
                     <input
                       type={field?.type}
                       value={option}
-                      name={field?.title}
+                      name={field?.name}
                       className="input_field_radio"
-                      required={field.isRequired ? true : false}
+                      required={field?.isRequired ? true : false}
                     />
                     {option}
                   </>
@@ -83,9 +81,9 @@ export const DynamicForm = props => {
                       type={field?.type}
                       onChange={e => handleInputChange(e, field)}
                       value={option}
-                      name={field?.title}
+                      name={field?.name}
                       className="input_field_box"
-                      required={field.isRequired ? true : false}
+                      required={field?.isRequired ? true : false}
                     />
                     {option}
                   </>
@@ -100,13 +98,13 @@ export const DynamicForm = props => {
         return (
           <>
             <input
-              name={field.title}
-              id={field.title}
-              type={field.type}
+              name={field?.name}
+              id={field?.name}
+              type={field?.type}
               className="input_field_type"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -115,12 +113,12 @@ export const DynamicForm = props => {
         return (
           <>
             <textarea
-              name={field.title}
-              id={field.title}
+              name={field?.name}
+              id={field?.name}
               className="input_field_textarea"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -129,13 +127,13 @@ export const DynamicForm = props => {
         return (
           <>
             <input
-              name={field.title}
-              id={field.title}
-              type={field.type}
+              name={field?.name}
+              id={field?.name}
+              type={field?.type}
               className="input_field_type"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -144,13 +142,13 @@ export const DynamicForm = props => {
         return (
           <>
             <input
-              name={field.title}
-              id={field.title}
-              type={field.type}
+              name={field?.name}
+              id={field?.name}
+              type={field?.type}
               className="input_field_type"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -159,13 +157,13 @@ export const DynamicForm = props => {
         return (
           <>
             <input
-              name={field.title}
-              id={field.title}
-              type={field.type}
+              name={field?.name}
+              id={field?.name}
+              type={field?.type}
               className="input_field_type"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -174,13 +172,13 @@ export const DynamicForm = props => {
         return (
           <>
             <input
-              name={field.title}
-              id={field.title}
-              type={field.type}
+              name={field?.name}
+              id={field?.name}
+              type={field?.type}
               className="input_field_type"
-              value={inputValues[field.title] || ''}
+              value={inputValues[field?.name] || ''}
               onChange={e => handleInputChange(e, field)}
-              required={field.isRequired ? true : false}
+              required={field?.isRequired ? true : false}
             />
           </>
         )
@@ -200,7 +198,7 @@ export const DynamicForm = props => {
   useEffect(() => {
     for (const field of fields) {
       setInputValues(prevState => {
-        return { ...prevState, [field.title]: '' }
+        return { ...prevState, [field?.name]: '' }
       })
     }
   }, [fields])
@@ -211,8 +209,8 @@ export const DynamicForm = props => {
         <h3 className="form_title">{props.response?.data?.title}</h3>
         {props.response?.data?.input_fields?.map((field, index) => (
           <div className="input_group" key={index}>
-            <label htmlFor={field.title} className="input_field_label">
-              {capetilizeFirstLetterOfFieldTitle(field.title)}
+            <label htmlFor={field?.name} className="input_field_label">
+              {field?.label}
             </label>
 
             <br />

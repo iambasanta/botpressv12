@@ -44,14 +44,18 @@ module.exports = {
         maxItems: 10,
         items: {
           type: 'object',
-          required: ['title', 'type', 'isRequired'],
+          required: ['label', 'name', 'type', 'isRequired'],
           properties: {
-            title: {
-              title: 'Title',
+            label: {
+              title: 'Field label',
+              type: 'string'
+            },
+            name: {
+              title: 'Field name',
               type: 'string'
             },
             type: {
-              title: 'Type',
+              title: 'Field type',
               type: 'string',
               enum: ['text', 'email', 'password', 'textarea', 'file', 'date', 'radio', 'checkbox', 'dropdown'],
               default: 'text'
