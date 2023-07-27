@@ -44,7 +44,7 @@ module.exports = {
         maxItems: 10,
         items: {
           type: 'object',
-          required: ['title', 'type'],
+          required: ['title', 'type', 'isRequired'],
           properties: {
             title: {
               title: 'Title',
@@ -55,6 +55,11 @@ module.exports = {
               type: 'string',
               enum: ['text', 'email', 'password', 'textarea', 'file', 'date', 'radio', 'checkbox', 'dropdown'],
               default: 'text'
+            },
+            isRequired: {
+              title: 'Is required',
+              type: 'boolean',
+              default: false
             },
             options: {
               title: 'Options',
