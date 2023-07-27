@@ -114,11 +114,10 @@ export const DynamicForm = props => {
       case 'textarea':
         return (
           <>
-            <input
+            <textarea
               name={field.title}
               id={field.title}
-              type={field.type}
-              className="input_field_type"
+              className="input_field_textarea"
               value={inputValues[field.title] || ''}
               onChange={e => handleInputChange(e, field)}
               required={field.isRequired ? true : false}
