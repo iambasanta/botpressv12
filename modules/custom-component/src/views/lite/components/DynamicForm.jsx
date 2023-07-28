@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react'
 export const DynamicForm = props => {
   const [fields, setFields] = useState([])
   const [inputValues, setInputValues] = useState({})
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleSubmit = async e => {
     e.preventDefault()
     if (fields.length > 0) {
+      setIsSubmitted(true)
       const confirm = window.confirm(`This would be sent to the configured endpoint: ${props.endpoint}`)
       if (confirm) {
         await props.bp.axios.post('/mod/custom-component/test-end-point', {
@@ -223,7 +225,7 @@ export const DynamicForm = props => {
 
         <br />
 
-        <button onClick={handleSubmit} className="form_button">
+        <button onClick={handleSubmit} className="form_button" disabled={isSubmitted}>
           Submit
         </button>
       </form>
