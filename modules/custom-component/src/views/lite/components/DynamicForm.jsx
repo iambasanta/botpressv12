@@ -192,6 +192,39 @@ export const DynamicForm = props => {
     }
   }
 
+  const renderForm = () => {
+    if (!isSubmitted) {
+      return (
+        <>
+          <form className="form_container">
+            <h3 className="form_title">{props.response?.data?.title}</h3>
+            {props.response?.data?.input_fields?.map((field, index) => (
+              <div className="input_group" key={index}>
+                <label htmlFor={field?.name} className="input_field_label">
+                  {field?.label}
+                </label>
+
+                <br />
+
+                {renderInputField(field)}
+
+                <br />
+              </div>
+            ))}
+
+            <br />
+
+            <button onClick={handleSubmit} className="form_button" disabled={isSubmitted}>
+              Submit
+            </button>
+          </form>
+        </>
+      )
+    } else {
+      return <p>Form submission successful!</p>
+    }
+  }
+
   useEffect(() => {
     const filterFields = props.response?.data?.input_fields?.filter(field => field !== undefined)
     setFields(filterFields)
@@ -205,30 +238,5 @@ export const DynamicForm = props => {
     }
   }, [fields])
 
-  return (
-    <div>
-      <form className="form_container">
-        <h3 className="form_title">{props.response?.data?.title}</h3>
-        {props.response?.data?.input_fields?.map((field, index) => (
-          <div className="input_group" key={index}>
-            <label htmlFor={field?.name} className="input_field_label">
-              {field?.label}
-            </label>
-
-            <br />
-
-            {renderInputField(field)}
-
-            <br />
-          </div>
-        ))}
-
-        <br />
-
-        <button onClick={handleSubmit} className="form_button" disabled={isSubmitted}>
-          Submit
-        </button>
-      </form>
-    </div>
-  )
+  return renderForm()
 }

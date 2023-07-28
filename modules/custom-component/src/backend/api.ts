@@ -12,7 +12,7 @@ export default async (bp: typeof sdk) => {
    * Accessing config file
    * const config = (await bp.config.mergeBotConfig(botId, {})).config
    */
-  const router = bp.http.createRouterForBot('custom-component')
+  const router = bp.http.createRouterForBot('custom-component', { checkAuthentication: false })
 
   // Link to access this route: http://localhost:3000/api/v1/bots/BOT_NAME/mod/custom-component/test-end-point
   router.post('/test-end-point', async (req, res) => {
