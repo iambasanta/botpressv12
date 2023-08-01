@@ -21,13 +21,17 @@ export default async (bp: typeof sdk) => {
 
     const config = (await bp.config.mergeBotConfig(botId, {})).form_header
     try {
-      await axios.post(
+      const response = await axios.post(
         endpoint,
         { inputValues },
         {
           headers: { auth_token: config.auth_token }
         }
       )
+
+      if (response.status === 200) {
+        res.sendStatus(200)
+      }
     } catch (error) {
       console.error(error)
       res.status(500).send('Internal server error')

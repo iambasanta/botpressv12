@@ -3,18 +3,29 @@ import React, { useState, useEffect } from 'react'
 export const DynamicForm = props => {
   const [fields, setFields] = useState([])
   const [inputValues, setInputValues] = useState({})
-  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleSubmit = async e => {
     e.preventDefault()
+
     if (fields.length > 0) {
-      setIsSubmitted(true)
       const confirm = window.confirm(`This would be sent to the configured endpoint: ${props.endpoint}`)
       if (confirm) {
-        await props.bp.axios.post('/mod/custom-component/test-end-point', {
-          endpoint: props.endpoint,
-          inputValues: inputValues
-        })
+        try {
+          const response = await props.bp.axios.post('/mod/custom-component/test-end-point', {
+            endpoint: props.endpoint,
+            inputValues: inputValues
+          })
+          if (response.status === 200) {
+            props.onSendData?.({
+              type: 'form_submitted',
+              payload: {
+                title: props.response?.data?.title
+              }
+            })
+          }
+        } catch (error) {
+          console.error('ERROR:', error)
+        }
       }
     }
   }
@@ -192,8 +203,10 @@ export const DynamicForm = props => {
     }
   }
 
+  const visible = props.isLastGroup && props.isLastOfGroup
+
   const renderForm = () => {
-    if (!isSubmitted) {
+    if (visible) {
       return (
         <>
           <form className="form_container">
@@ -214,14 +227,18 @@ export const DynamicForm = props => {
 
             <br />
 
-            <button onClick={handleSubmit} className="form_button" disabled={isSubmitted}>
+            <button onClick={handleSubmit} className="form_button">
               Submit
             </button>
           </form>
         </>
       )
     } else {
-      return <p>Form submission successful!</p>
+      return (
+        <>
+          <p className="success_message">{props.response?.data?.title} is submitted!</p>
+        </>
+      )
     }
   }
 
