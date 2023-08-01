@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react'
 export const DynamicForm = props => {
   const [fields, setFields] = useState([])
   const [inputValues, setInputValues] = useState({})
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = async e => {
     e.preventDefault()
 
     if (fields.length > 0) {
-      const confirm = window.confirm(`This would be sent to the configured endpoint: ${props.endpoint}`)
-      if (confirm) {
+      if (validateForm()) {
         try {
           const response = await props.bp.axios.post('/mod/custom-component/test-end-point', {
             endpoint: props.endpoint,
@@ -35,6 +35,22 @@ export const DynamicForm = props => {
       ...inputValues,
       [field?.name]: e?.target?.value
     })
+  }
+
+  const capetilizeFirstLetter = name => name[0].toUpperCase() + name.slice(1)
+
+  const validateForm = () => {
+    let formIsValid = true
+    const newErrors = {}
+    for (const field of fields) {
+      if (field.isRequired && !inputValues[field.name]) {
+        newErrors[field.name] = `${capetilizeFirstLetter(field.name)} is required!`
+        formIsValid = false
+      }
+    }
+
+    setErrors(newErrors)
+    return formIsValid
   }
 
   const renderInputField = field => {
@@ -216,12 +232,12 @@ export const DynamicForm = props => {
                 <label htmlFor={field?.name} className="input_field_label">
                   {field?.label}
                 </label>
-
                 <br />
 
                 {renderInputField(field)}
 
                 <br />
+                <div className="error_message">{errors[field.name]}</div>
               </div>
             ))}
 
@@ -253,6 +269,7 @@ export const DynamicForm = props => {
         return { ...prevState, [field?.name]: '' }
       })
     }
+    setErrors({})
   }, [fields])
 
   return renderForm()
